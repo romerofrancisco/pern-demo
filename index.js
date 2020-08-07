@@ -3,14 +3,6 @@ const app = express();
 const cors = require('cors');
 const pool = require('./db');
 
-// const sendQuery = async (query_string) => {
-//     pool.query(query_string, (err, res) => {
-//     if (err) throw err;
-//     pool.end();
-//     return res.rows
-//   });
-// }
-
 //middleware
 app.use(cors());
 app.use(express.json()); //this accesss to request.body and returns json data
@@ -36,7 +28,7 @@ app.use(express.json()); //this accesss to request.body and returns json data
 
 app.get('/report', async (req, res) => {
     try {
-        const employees = await pool.query('SELECT * FROM employees;')
+        const employees = await pool.query('SELECT employee_id,first_name,last_name,email,hire_date,department,salary FROM employees;')
         res.json(employees.rows)
     } catch (err) {
         console.error(err.message)
@@ -62,13 +54,9 @@ app.get('/report/:id', async (req, res) => {
 //delete an employee
 //app.delete()
 
-
-
-
-
 let port = process.env.PORT;
 if (port == null || port == "") {
-    port = 3000;
+    port = 5000;
 };
 app.listen(port, () => {
     console.log(`Server has started on port: ${port}`);
