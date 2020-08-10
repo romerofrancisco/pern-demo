@@ -1,18 +1,21 @@
-import React, {Fragment, useState} from 'react';
+import React, { Fragment, useState } from 'react';
 import ListEmployees from './ListEmployees'
 
-let result = '';
 
 const SearchEmployee = () => {
-    const [filter, setFilter] = useState('');
+    //const [filter, setFilter] = useState('');
+    const [result, setResult] = useState('');
 
     const onSubmitForm = async e => {
+        const textEl = document.querySelector('#filterText').value;
         e.preventDefault();
         try {
-            const id = { filter };
-            const response = await fetch(`http://localhost:5000/report/${id.filter}`);
-            result = await response.text();
-            //window.location = '/';
+            if (textEl !== '') {
+                const response = await fetch(`/report/${textEl}`);
+                setResult(await response.json())
+            } else {
+                setResult('')
+            }
         } catch (err) {
             console.error(err);
         };
@@ -22,10 +25,11 @@ const SearchEmployee = () => {
         <Fragment>
             <h1 className='text-center mt-5'>Employees</h1>
             <form className='d-flex mt-5' onSubmit={onSubmitForm}>
-                <input type='text' className='form-control' value={filter} onChange={e => setFilter(e.target.value)}/>
-                <button className='btn btn-success'>Filter</button>
+                <label htmlFor='filterText' className="mr-3 col-form-label">ID:</label>
+                <input id="filterText" type='text' className='form-control col-sm-3 '/>
+                <button className='btn btn-success ml-3'>Filter</button>
             </form>
-            <ListEmployees filteredEmployee = { filter }/>
+            <ListEmployees filteredEmployee={result} />
         </Fragment>
     );
 };
