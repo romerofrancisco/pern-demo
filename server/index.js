@@ -2,21 +2,13 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const pool = require('./db');
-const path = require('path')
 
 //middleware
 app.use(cors());
 app.use(express.json()); //this accesss to request.body and returns json data
 
-if (process.env.NODE_ENV === 'production'){
-    app.use(express.static(path.join(__dirname, 'client/build')))
-}
-
 //routes//
 //------------------------//
-
-
-//get all employees
 
 app.get('/report', async (req, res) => {
     try {
@@ -53,7 +45,3 @@ if (port == null || port == "") {
 app.listen(port, () => {
     console.log(`Server has started on port: ${port}`);
 });
-
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client/build/index.html'))
-})

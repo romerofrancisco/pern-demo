@@ -7,10 +7,9 @@ const ListEmployees = (props) => {
     const getEmployees = async (employee) => {
         try {
             if (employee && employee !== '') {
-                console.log(employee)
                 setEmployees([employee]);
             } else {
-                const response = await fetch(`http://localhost:5000/report`);
+                const response = await fetch('/report');
                 const jsonData = await response.json();
                 setEmployees(jsonData);
             }
