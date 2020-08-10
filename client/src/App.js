@@ -3,7 +3,6 @@ import './App.css';
 
 //components
 import SearchEmployee from './components/SearchEmployee';
-import ListEmployees from './components/ListEmployees';
 
 function App() {
   return (
