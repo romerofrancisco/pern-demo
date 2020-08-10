@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
+import moment from 'moment';
 
 const ListEmployees = () => {
     const [employees, setEmployees] = useState([]);
@@ -19,8 +20,6 @@ const ListEmployees = () => {
         getEmployees();
     }, []); //the empty array makes useEffect send only 1 request
 
-    console.log(employees)
-
     return (
         <Fragment>
         {' '}
@@ -28,22 +27,26 @@ const ListEmployees = () => {
             <thead>
                 <tr>
                     <th>ID</th>  
-                    <th>Firstname</th>
-                    <th>Lastname</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
                     <th>Email</th>
-                    <th>Hired Date</th>
+                    <th>Hire Date</th>
                     <th>Department</th>
                     <th>Salary</th>
                 </tr>
             </thead>
             <tbody>
-                {/*
-                <tr>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>john@example.com</td>
-                </tr>
-                */}
+                {employees.map(employee => (
+                    <tr key={employee.employee_id}>
+                        <td>{employee.employee_id}</td>
+                        <td>{employee.first_name}</td>
+                        <td>{employee.last_name}</td>
+                        <td>{employee.email}</td>
+                        <td>{moment(employee.hire_date).format('DD/MM/YYYY')}</td>
+                        <td>{employee.department}</td>
+                        <td>{new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(employee.salary)}</td>
+                    </tr>          
+                ))}
             </tbody>
         </table>
     </Fragment>
