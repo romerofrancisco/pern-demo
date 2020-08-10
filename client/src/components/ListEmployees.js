@@ -1,14 +1,16 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import moment from 'moment';
 
-const ListEmployees = () => {
-    const [employees, setEmployees] = useState([]);
+const ListEmployees = (props) => {
     
+    const [employees, setEmployees] = useState([]);
+    let id = props.filteredEmployee;
+    console.log(id)
     const getEmployees = async() => {
         try {
+
             const response = await fetch('http://localhost:5000/report');
             const jsonData = await response.json();
-
             setEmployees(jsonData);
             
         } catch (err) {

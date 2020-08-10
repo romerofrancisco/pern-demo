@@ -10,7 +10,6 @@ function App() {
     <Fragment>
       <div className='container'>
         <SearchEmployee />
-        <ListEmployees />
       </div>
     </Fragment>
   );
