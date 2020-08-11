@@ -1,8 +1,12 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import moment from 'moment';
+import BootstrapTable from 'react-bootstrap-table-next';
+import paginationFactory from 'react-bootstrap-table2-paginator';
+import * as ReactBootStrap from 'react-bootstrap';
 
 const ListEmployees = (props) => {
     const [employees, setEmployees] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const getEmployees = async (employee) => {
         try {
@@ -13,7 +17,7 @@ const ListEmployees = (props) => {
                 const jsonData = await response.json();
                 setEmployees(jsonData);
             }
-
+            setLoading(true);
         } catch (err) {
             console.error(err.message)
         }
@@ -23,9 +27,31 @@ const ListEmployees = (props) => {
         getEmployees(props.filteredEmployee);
     }, [props]);
 
+    const columns = [ 
+        {dataField: 'employee_id', text: 'ID'},
+        {dataField: 'first_name', text: 'First Name'},
+        {dataField: 'last_name', text: 'Last Name'},
+        {dataField: 'email', text: 'Email'},
+        {dataField: 'hire_date', text: 'Hired Date'},
+        {dataField: 'department', text: 'Department'},
+        {dataField: 'salary', text: 'Salary'}
+    ]
+
     return (
         <Fragment>
-            {' '}
+            <div className='App table mt-5 table-striped table-hover table-sm'>
+            {loading ? (
+                <BootstrapTable
+                    keyField='employee_id'
+                    data={employees}
+                    columns={columns}
+                    pagination={paginationFactory()}
+                />):(
+                    <ReactBootStrap.Spinner animation='border'/>
+                )
+            }
+            </div>
+            {/* {' '}
             <table className="table table-dark table-striped mt-5 text-center">
                 <thead>
                     <tr>
@@ -39,7 +65,8 @@ const ListEmployees = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {employees.map(employee => (
+                    {
+                        employees.map(employee => (
                         <tr key={employee.employee_id}>
                             <td>{employee.employee_id}</td>
                             <td>{employee.first_name}</td>
@@ -51,7 +78,7 @@ const ListEmployees = (props) => {
                         </tr>
                     ))}
                 </tbody>
-            </table>
+            </table> */}
         </Fragment>
     )
 };

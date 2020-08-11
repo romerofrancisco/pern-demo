@@ -23,7 +23,7 @@ const SearchEmployee = () => {
 
     return (
         <Fragment>
-            <h1 className='text-center mt-5'>Employees</h1>
+            <h1 className='text-center mt-5'>Rest API Demo (Francisco Romero) </h1>
             <form className='d-flex mt-5' onSubmit={onSubmitForm}>
                 <label htmlFor='filterText' className="mr-3 col-form-label">ID:</label>
                 <input id="filterText" type='text' className='form-control col-sm-3 '/>
